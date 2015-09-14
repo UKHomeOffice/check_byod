@@ -25,8 +25,10 @@ check_on "OS Updates Schedule" "softwareupdate --schedule" "on"
 check_on "Remote Login" "systemsetup -getremotelogin" "on"
 check_on "Auto Login" "defaults read /Library/Preferences/com.apple.loginwindow" "autoLoginUser"
 check_on "Admin System Preference Auth" "security authorizationdb read system.preferences" "Checked by the Admin framework"
+check_on "Screen Saver Password" "defaults read ~/Library/Preferences/com.apple.screensaver.plist" "askForPassword"
 
 if [[ $(systemsetup -getdisplaysleep | grep -oE '[[:digit:]]+') -gt 5 ]]; then
+
   SERVICE_RESULT+=("Display Sleep Time: Greater than 5 minutes")
 fi
 
