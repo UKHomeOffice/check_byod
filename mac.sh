@@ -28,8 +28,11 @@ check_on "Admin System Preference Auth" "security authorizationdb read system.pr
 check_on "Screen Saver Password" "defaults read ~/Library/Preferences/com.apple.screensaver.plist" "askForPassword"
 
 if [[ $(systemsetup -getdisplaysleep | grep -oE '[[:digit:]]+') -gt 5 ]]; then
-
   SERVICE_RESULT+=("Display Sleep Time: Greater than 5 minutes")
+fi
+
+if [[ $(defaults read ~/Library/Preferences/com.apple.screensaver.plist | grep askForPasswordDelay | grep -oE '[[:digit:]]+') -gt 300 ]]; then
+  SERVICE_RESULT+=("Screen save ask for password time: Greater than 5 minutes")
 fi
 
 # Mount the recovery disk and check if firmware is set
